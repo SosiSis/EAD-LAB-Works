@@ -9,7 +9,7 @@ public class JDBCDemo {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://127.0.0.1:3306/StudentsDB";
         String username = "root"; 
-        String password = "sosinasisaymelese"; // Replace with your actual password
+        String password = "sosinasisaymelese"; 
 
         try {
             // Register the driver class (optional for newer versions)
