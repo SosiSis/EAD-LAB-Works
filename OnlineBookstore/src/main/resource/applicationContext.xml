@@ -8,7 +8,7 @@
     <bean id="dbConnectionManager" class="com.servlet.DBConnectionManager"/>
 
     <!-- Define the TaskRegistrationServlet bean and inject DBConnectionManager via constructor
-    <bean id="taskRegistrationServlet" class="com.servlet.BookRegistrationServlet">
+    <bean id="BookRegistrationServlet" class="com.servlet.BookRegistrationServlet">
         <constructor-arg ref="dbConnectionManager"/>
     </bean> -->
 
