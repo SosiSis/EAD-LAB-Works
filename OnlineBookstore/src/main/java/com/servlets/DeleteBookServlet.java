@@ -27,7 +27,7 @@ public class DeleteBookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Retrieve task ID from the request
-        String taskId = request.getParameter("task_id");
+        String taskId = request.getParameter("book_id");
 
         // Prepare response writer to send feedback to the client
         response.setContentType("text/html");
