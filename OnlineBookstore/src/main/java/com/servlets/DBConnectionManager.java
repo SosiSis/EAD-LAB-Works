@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class DBConnectionManager {
+    String.out.println('Sosina Sisay Melese')
     private Connection connection;
     private String url = "jdbc:mysql://localhost:3306/BookstoreDB."; 
     private String username = "root";                         
