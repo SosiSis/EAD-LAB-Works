@@ -1,0 +1,57 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+   <servlet>
+    <servlet-name>springDispatcher</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/applicationContext.xml</param-value> <!-- Reference to Spring configuration file -->
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+  	<servlet-name>BookRegistrationServlet</servlet-name>
+  	<display-name>BookRegistrationServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.servlet.BookRegistrationServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DisplayBooksServlet</servlet-name>
+  	<display-name>DisplayBooksServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.servlet.DisplayBooksServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DeleteBookServlet</servlet-name>
+  	<display-name>DeleteBookServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.servlet.DeleteBookServlet</servlet-class>
+  </servlet>
+   <servlet>
+  	<servlet-name>SearchBooksServlet</servlet-name>
+  	<display-name>SearchBooksServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.servlet.SearchBooksServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>BookRegistrationServlet</servlet-name>
+  	<url-pattern>/BookRegistrationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DisplayBooksServlet</servlet-name>
+  	<url-pattern>/DisplayBooksServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DeleteBookServlet</servlet-name>
+  	<url-pattern>/DeleteBookServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SearchBooksServlet</servlet-name>
+  	<url-pattern>/SearchBooksServlet</url-pattern>
+  </servlet-mapping>
+</web-app>
