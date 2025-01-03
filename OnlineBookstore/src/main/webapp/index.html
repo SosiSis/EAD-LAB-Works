@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bookstore</title>
+    <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Online Bookstore</h2>
+
+        <!-- Task Registration Form -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Register Book</h5>
+                <form action="register" method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Book Title</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter book title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Author of the book</label>
+                        <input type="text" class="form-control" id="author" name="author" placeholder="Enter author of the book" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price of the book</label>
+                        <input type="number" class="form-control" id="price" name="price" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register Book</button>
+                </form>
+                <a href="display-books" class="btn btn-link mt-3">View All Books</a>
+            </div>
+        </div>
+
+        <!-- Task Deletion Form -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Delete Book</h5>
+                <form action="deleteBook" method="post">
+                    <div class="mb-3">
+                        <label for="book_id" class="form-label">Book ID</label>
+                        <input type="number" class="form-control" id="book_id" name="book_id" placeholder="Enter book ID" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete Book</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Task Search Form -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Search Books</h5>
+                <form action="searchBooks" method="get">
+                    <div class="mb-3">
+                        <label for="search_title" class="form-label">Search by Title</label>
+                        <input type="text" class="form-control" id="search_title" name="title" placeholder="Enter task title" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
