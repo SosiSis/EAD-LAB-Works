@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itsc.movie.config.JWTService;
 import com.itsc.movie.request.UserRequest;
+import com.itsc.movie.response.TokenResponse;
 import com.itsc.movie.services.UserService;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
@@ -44,17 +45,26 @@ public class UserController {
 	}
 
 	@PostMapping("/getToken")
-	
-	public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-				
-				
+    public ResponseEntity<TokenResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
-		if (authentication.isAuthenticated()) {
-			return jwtService.generateToken(authRequest.getUsername());
-		}
+        if (authentication.isAuthenticated()) {
+            // Generate token
+            String token = jwtService.generateToken(authRequest.getUsername());
 
-		throw new UsernameNotFoundException("invalid user details.");
-	}
+            // Retrieve the user's role (this could be a custom method to fetch user role)
+            String role = authentication.getAuthorities().stream()
+                                        .map(authority -> authority.getAuthority())
+                                        .findFirst() // Assumes only one role, or you can adapt for multiple roles
+                                        .orElse("ROLE_USER"); // Default if no role found
+
+            // Create response object
+            TokenResponse tokenResponse = new TokenResponse(token, role);
+
+            return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
+        }
+
+        throw new UsernameNotFoundException("Invalid user details.");
+    }
 }
