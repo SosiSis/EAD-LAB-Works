@@ -1,13 +1,15 @@
 package com.itsc.movie.response;
 
 public class TokenResponse {
+
     private String token;
     private String role;
+    private Integer userId;
 
-    // Constructor
-    public TokenResponse(String token, String role) {
+    public TokenResponse(String token, String role, Integer userId) {
         this.token = token;
         this.role = role;
+        this.userId = userId;
     }
 
     // Getters and Setters
@@ -25,5 +27,13 @@ public class TokenResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

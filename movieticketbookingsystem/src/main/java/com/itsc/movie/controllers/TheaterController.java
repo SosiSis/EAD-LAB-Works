@@ -3,6 +3,7 @@ package com.itsc.movie.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.itsc.movie.repositories.TheaterRepository;
 import com.itsc.movie.request.TheaterRequest;
 import com.itsc.movie.services.TheaterService;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
 @RequestMapping("/theater")
 public class TheaterController {

@@ -4,6 +4,7 @@ C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\its
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\config\SecurityConfiguration.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\config\UserInfoUserDetails.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\config\UserInfoUserDetailsService.java
+C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\config\WebConfig.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\controllers\AuthRequest.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\controllers\MovieController.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\controllers\ShowController.java
@@ -50,6 +51,7 @@ C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\its
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\request\TicketRequest.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\request\UserRequest.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\response\TicketResponse.java
+C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\response\TokenResponse.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\response\UserResponse.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\services\MovieService.java
 C:\Users\HP\Desktop\EAD-LAB-Works\movieticketbookingsystem\src\main\java\com\itsc\movie\services\ShowService.java

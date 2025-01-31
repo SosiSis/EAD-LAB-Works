@@ -59,8 +59,11 @@ public class UserController {
                                         .findFirst() // Assumes only one role, or you can adapt for multiple roles
                                         .orElse("ROLE_USER"); // Default if no role found
 
+            // Retrieve userId from the authenticated user (assuming UserService has a method to get user details)
+            Integer userId = userService.getUserIdByUsername(authRequest.getUsername());
+
             // Create response object
-            TokenResponse tokenResponse = new TokenResponse(token, role);
+            TokenResponse tokenResponse = new TokenResponse(token, role, userId);
 
             return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
         }
