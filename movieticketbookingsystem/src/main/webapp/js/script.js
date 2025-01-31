@@ -66,6 +66,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
+
+
+
+
 // This is for admin to add movie
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("addMovieForm").addEventListener("submit", async function (event) {
@@ -124,7 +129,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// for adding a show
+
+
+
+
+
+
+// for adding a show ans associated seats
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("addShowForm").addEventListener("submit", async function (event) {
@@ -209,9 +220,64 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("associateSeatsForm").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get form values
+        const showId = document.getElementById("showId").value;
+        const classicPrice = document.getElementById("classicPrice").value;
+        const premiumPrice = document.getElementById("premiumPrice").value;
+
+        console.log("Associating seats with show:", { showId, classicPrice, premiumPrice });
+
+        // Prepare request body
+        const requestBody = {
+            showId,
+            classicPrice,
+            premiumPrice
+        };
+
+        try {
+            const response = await fetch("http://localhost:8099/show/associateSeats", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("authToken") // Add token if needed
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to associate seats: " + response.statusText);
+            }
+
+            const responseData = await response.json();
+            console.log("Seats associated successfully:", responseData);
+
+            alert("Seats associated successfully!");
+
+            // Optionally, reset the form after submission
+            document.getElementById("associateSeatsForm").reset();
+
+        } catch (error) {
+            console.error("Error during seat association:", error);
+            alert("Failed to associate seats. Please try again.");
+        }
+    });
+});
 
 
-// to add theater and associated seat
+
+
+
+
+
+
+
+
+
+// to add theater and theater seats
 
 document.addEventListener("DOMContentLoaded", function () {
     // Handle adding a theater
@@ -270,33 +336,17 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Adding seats with details:", { addressSeats, seatsInRow, premiumSeats, classicSeats });
 
         try {
-            // First, retrieve the theater ID using the address
-            const theaterResponse = await fetch(`http://localhost:8099/theater/getByName/${addressSeats}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("authToken") // Add token if needed
-                }
-            });
-
-            if (!theaterResponse.ok) {
-                throw new Error("Theater not found: " + theaterResponse.statusText);
-            }
-
-            const theaterData = await theaterResponse.json();
-            const theaterId = theaterData.id;
-            console.log("Theater ID:", theaterId);
-
+            
             // Prepare the seats data
             const seatsRequestBody = {
-                theaterId,
+                addressSeats,
                 seatsInRow,
                 premiumSeats,
                 classicSeats
             };
 
             // Send the seat data to the backend
-            const seatsResponse = await fetch("http://localhost:8099/theater/addSeats", {
+            const seatsResponse = await fetch("http://localhost:8099/theater/addTheaterSeat", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -320,6 +370,62 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             console.error("Error during seat addition:", error);
             alert("Failed to add seats. Please try again.");
+        }
+    });
+});
+
+// for user to book a ticket
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("bookTicketForm").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get form values
+        const showId = document.getElementById("showId").value;
+        const seats = document.getElementById("seats").value.split(",").map(seat => seat.trim()); // Split and trim seat numbers
+
+        // Get userId from localStorage
+        const userId = localStorage.getItem("userId");
+
+        if (!userId) {
+            alert("User ID not found in localStorage. Please log in again.");
+            return;
+        }
+
+        console.log("Booking tickets for show:", { showId, userId, seats });
+
+        // Prepare request body
+        const requestBody = {
+            showId,
+            userId,
+            seats
+        };
+
+        try {
+            const response = await fetch("http://localhost:8099/ticket/book", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("authToken") // Add token if needed
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error("Booking failed: " + response.statusText);
+            }
+
+            const responseData = await response.json();
+            console.log("Tickets booked successfully:", responseData);
+
+            alert("Tickets booked successfully!");
+
+            // Optionally, reset the form after submission
+            document.getElementById("bookTicketForm").reset();
+
+        } catch (error) {
+            console.error("Error during ticket booking:", error);
+            alert("Booking failed. Please try again.");
         }
     });
 });

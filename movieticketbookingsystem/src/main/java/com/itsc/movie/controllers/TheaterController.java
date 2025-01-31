@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.itsc.movie.entities.Theater;
 import com.itsc.movie.repositories.TheaterRepository;
 import com.itsc.movie.request.TheaterRequest;
+import com.itsc.movie.request.TheaterSeatRequest;
 import com.itsc.movie.services.TheaterService;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
@@ -23,20 +24,22 @@ public class TheaterController {
 
     @Autowired
     private TheaterRepository theaterRepository;
-	
-	@Autowired
+    
+    @Autowired
     private TheaterService theaterService;
 
+    // Add new theater
     @PostMapping("/addNew")
-	public ResponseEntity<String> addTheater(@RequestBody TheaterRequest request) {
-		try {
-			String result = theaterService.addTheater(request);
-			return new ResponseEntity<>(result, HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
+    public ResponseEntity<String> addTheater(@RequestBody TheaterRequest request) {
+        try {
+            String result = theaterService.addTheater(request);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
+    // Get theater by address
     @GetMapping("/getByName/{address}")
     public ResponseEntity<Theater> getTheaterByName(@PathVariable String address) {
         Theater theater = theaterRepository.findByAddress(address);
@@ -44,6 +47,17 @@ public class TheaterController {
             return new ResponseEntity<>(theater, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Add seats to a theater
+    @PostMapping("/addTheaterSeat")
+    public ResponseEntity<String> addTheaterSeat(@RequestBody TheaterSeatRequest request) {
+        try {
+            String result = theaterService.addTheaterSeat(request);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
