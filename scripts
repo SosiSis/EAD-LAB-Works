@@ -1,0 +1,14 @@
+ Create the database
+CREATE DATABASE IF NOT EXISTS BookstoreDB;
+
+-- Use the database
+USE BookstoreDB;
+
+-- Create the Students table
+CREATE TABLE IF NOT EXISTS Books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    price DOUBLE NOT NULL,
+    
+);
