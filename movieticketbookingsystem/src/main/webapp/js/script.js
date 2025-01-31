@@ -138,87 +138,53 @@ document.addEventListener("DOMContentLoaded", function () {
 // for adding a show ans associated seats
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("addShowForm").addEventListener("submit", async function (event) {
+    document.getElementById("addShowForm").addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent default form submission
 
         // Get form values
-        const movieName = document.getElementById("movieId").value; // Ensure the ID matches the input field
-        const theaterAddress = document.getElementById("theaterId").value; // Ensure the ID matches the input field
+        const movieId = document.getElementById("movieId").value.trim();
+        const theaterId = document.getElementById("theaterId").value.trim();
         const showTime = document.getElementById("showTime").value;
         const showDate = document.getElementById("showDate").value;
 
-        console.log("Adding show with details:", { movieName, theaterAddress, showTime, showDate });
+        console.log("Adding show with details:", { movieId, theaterId, showTime, showDate });
 
-        try {
-            // Step 1: Get Theater ID from the theater/getByName/{address} endpoint
-            const theaterResponse = await fetch(`http://localhost:8099/theater/getByName/${theaterAddress}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("authToken") // Add token if needed
-                }
+        const authToken = localStorage.getItem("authToken"); // Token for authorization
+
+        
+
+                // Step 3: Create Show
+                return fetch("http://localhost:8099/show/addNew", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        movieId,
+                        theaterId,
+                        showTime,
+                        showDate
+                    })
+                });
             });
-
-            if (!theaterResponse.ok) {
-                throw new Error("Theater not found: " + theaterResponse.statusText);
-            }
-
-            const theaterData = await theaterResponse.json();
-            const theaterId = theaterData.id;
-            console.log("Theater ID:", theaterId);
-
-            // Step 2: Get Movie ID from the movie/getByName/{name} endpoint
-            const movieResponse = await fetch(`http://localhost:8099/movie/getByName/${movieName}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("authToken") // Add token if needed
-                }
-            });
-
-            if (!movieResponse.ok) {
-                throw new Error("Movie not found: " + movieResponse.statusText);
-            }
-
-            const movieData = await movieResponse.json();
-            const movieId = movieData.id;
-            console.log("Movie ID:", movieId);
-
-            // Step 3: Create Show and send to show/addNew endpoint
-            const showRequestBody = {
-                movieId,
-                theaterId,
-                showTime,
-                showDate
-            };
-
-            const showResponse = await fetch("http://localhost:8099/show/addNew", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("authToken") // Add token if needed
-                },
-                body: JSON.stringify(showRequestBody)
-            });
-
+        })
+        .then(showResponse => {
             if (!showResponse.ok) {
-                throw new Error("Failed to add show: " + showResponse.statusText);
+                throw new Error(`Failed to add show: ${showResponse.statusText}`);
             }
-
-            const showData = await showResponse.json();
+            return showResponse.json();
+        })
+        .then(showData => {
             console.log("Show added successfully:", showData);
-
             alert("Show added successfully!");
-
-            // Optionally, redirect to another page after successful addition
-            window.location.href = "show_dashboard.html"; // Or another page if required
-
-        } catch (error) {
+            window.location.href = "show_dashboard.html"; // Redirect after success
+        })
+        .catch(error => {
             console.error("Error during show creation:", error);
             alert("Failed to add show. Please try again.");
-        }
-    });
-});
+        });
+  
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("associateSeatsForm").addEventListener("submit", async function (event) {
@@ -328,21 +294,21 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault(); // Prevent default form submission
 
         // Get form values for theater seats
-        const addressSeats = document.getElementById("addressSeats").value;
-        const seatsInRow = document.getElementById("seatsInRow").value;
-        const premiumSeats = document.getElementById("premiumSeats").value;
-        const classicSeats = document.getElementById("classicSeats").value;
+        const address = document.getElementById("addressSeats").value;
+        const noOfSeatInRow = document.getElementById("seatsInRow").value;
+        const noOfPremiumSeat = document.getElementById("premiumSeats").value;
+        const noOfClassicSeat = document.getElementById("classicSeats").value;
 
-        console.log("Adding seats with details:", { addressSeats, seatsInRow, premiumSeats, classicSeats });
+        console.log("Adding seats with details:", { address, noOfSeatInRow, noOfPremiumSeat, noOfClassicSeat });
 
         try {
             
             // Prepare the seats data
             const seatsRequestBody = {
-                addressSeats,
-                seatsInRow,
-                premiumSeats,
-                classicSeats
+                address,
+                noOfSeatInRow,
+                noOfPremiumSeat,
+                noOfClassicSeat
             };
 
             // Send the seat data to the backend
@@ -382,7 +348,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Get form values
         const showId = document.getElementById("showId").value;
-        const seats = document.getElementById("seats").value.split(",").map(seat => seat.trim()); // Split and trim seat numbers
+        const requestSeats = document.getElementById("seats").value.split(",").map(seat => seat.trim()); // Split and trim seat numbers
 
         // Get userId from localStorage
         const userId = localStorage.getItem("userId");
@@ -392,13 +358,14 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        console.log("Booking tickets for show:", { showId, userId, seats });
+        console.log("Booking tickets for show:", { showId, userId, requestSeats });
 
         // Prepare request body
         const requestBody = {
-            showId,
-            userId,
-            seats
+            showId : parseInt(showId, 10),
+            userId: parseInt(userId, 10) ,
+            requestSeats
+            
         };
 
         try {
