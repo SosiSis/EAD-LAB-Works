@@ -94,11 +94,11 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(requestBody)
       });
 
-     
-      const responseData = await response.json();
-      console.log("Movie added successfully:", responseData);
       alert("Movie added successfully!");
-      window.location.href = "movie_dashboard.html"; 
+      window.location.href = "admin_dashboard.html"; 
+      
+    
+      
 
     } catch (error) {
       

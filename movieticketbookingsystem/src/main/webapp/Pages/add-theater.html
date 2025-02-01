@@ -70,10 +70,11 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(theaterRequestBody)
       });
 
+      alert("Theater added successfully!!!");
+      
+
      
-      const theaterData = await response.json();
-      console.log("Theater added successfully:", theaterData);
-      alert("Theater added successfully!");
+    
 
     } catch (error) {
      
@@ -105,12 +106,10 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(seatsRequestBody)
       });
 
-     
-
-      const seatsData = await seatsResponse.json();
-      console.log("Seats added successfully:", seatsData);
       alert("Seats added successfully!");
+      window.location.href = "admin_dashboard.html";
 
+      
     } catch (error) {
      
     }

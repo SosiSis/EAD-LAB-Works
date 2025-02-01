@@ -53,84 +53,87 @@
     </div>
     <script >
         // Add Show
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("addShowForm").addEventListener("submit", async function (event) {
+        document.addEventListener("DOMContentLoaded", function () {
+
+document.getElementById("addShowForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const movieId = document.getElementById("movieId").value; 
-    const theaterId = document.getElementById("theaterId").value; 
+    const movieId = document.getElementById("movieId").value;
+    const theaterId = document.getElementById("theaterId").value;
     const showStartTime = document.getElementById("showTime").value;
     const showDate = document.getElementById("showDate").value;
 
     try {
-      const showRequestBody = {
-        movieId,
-        theaterId,
-        showStartTime,
-        showDate
-      };
+        const [hours, minutes] = showStartTime.split(":");
+        const formattedStartTime = `${hours}:${minutes}:00`;
 
-      const response = await fetch("http://localhost:8099/show/addNew", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("authToken")
-        },
-        body: JSON.stringify(showRequestBody)
-      });
+        const showRequestBody = {
+            movieId: parseInt(movieId, 10),
+            theaterId: parseInt(theaterId, 10),
+            showStartTime: formattedStartTime,
+            showDate
+        };
 
-      if (!response.ok) {
-        throw new Error("Failed to add show: " + response.statusText);
-      }
+        const response = await fetch("http://localhost:8099/show/addNew", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("authToken")
+            },
+            body: JSON.stringify(showRequestBody)
+        });
 
-      const showData = await response.json();
-      console.log("Show added successfully:", showData);
-      alert("Show added successfully!");
-      window.location.href = "show_dashboard.html"; 
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error ${response.status}: ${errorText}`);
+        }
+
+        alert("Show added successfully!");
+        // Optionally clear the form fields here
 
     } catch (error) {
-      console.error("Error during show creation:", error);
-      alert("Failed to add show. Please try again.");
+        console.error("Error adding show:", error);
+        alert("Error adding show: " + error.message);
     }
-  });
 });
 
-// Associate Seats with Show
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("associateSeatsForm").addEventListener("submit", async function (event) {
+
+document.getElementById("associateSeatsForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const showId = document.getElementById("showId").value;
     const priceOfPremiumSeat = document.getElementById("premiumPrice").value;
     const priceOfClassicSeat = document.getElementById("classicPrice").value;
-    
 
     try {
-      const requestBody = {
-        showId:parseInt(showId, 10),
-        priceOfPremiumSeat:parseInt(priceOfPremiumSeat, 10),
-        priceOfClassicSeat:parseInt( priceOfClassicSeat, 10)
-      };
+        const requestBody = {
+            showId: parseInt(showId, 10),
+            priceOfPremiumSeat: parseInt(priceOfPremiumSeat, 10),
+            priceOfClassicSeat: parseInt(priceOfClassicSeat, 10)
+        };
 
-      const response = await fetch("http://localhost:8099/show/associateSeats", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("authToken")
-        },
-        body: JSON.stringify(requestBody)
-      });
+        const response = await fetch("http://localhost:8099/show/associateSeats", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("authToken")
+            },
+            body: JSON.stringify(requestBody)
+        });
 
-      
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error ${response.status}: ${errorText}`);
+        }
 
-      const responseData = await response.json();
-      console.log("Seats associated successfully:", responseData);
-      alert("Seats associated successfully!");
+        alert("Seats associated successfully!!");
+        window.location.href = "admin_dashboard.html";
 
     } catch (error) {
-      
+        console.error("Error associating seats:", error);
+        alert("Error associating seats: " + error.message);
     }
-  });
+});
 });
     </script>
 </body>
