@@ -59,14 +59,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const movieId = document.getElementById("movieId").value; 
     const theaterId = document.getElementById("theaterId").value; 
-    const showTime = document.getElementById("showTime").value;
+    const showStartTime = document.getElementById("showTime").value;
     const showDate = document.getElementById("showDate").value;
 
     try {
       const showRequestBody = {
         movieId,
         theaterId,
-        showTime,
+        showStartTime,
         showDate
       };
 
@@ -101,8 +101,9 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
 
     const showId = document.getElementById("showId").value;
-    const priceOfClassicSeat = document.getElementById("classicPrice").value;
     const priceOfPremiumSeat = document.getElementById("premiumPrice").value;
+    const priceOfClassicSeat = document.getElementById("classicPrice").value;
+    
 
     try {
       const requestBody = {
