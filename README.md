@@ -39,7 +39,7 @@ Build Tool: Maven
    ```
 2. Navigate to the project directory:
    ```sh
-   cd MovieTicketBookingSystem
+   cd MovieTicketBookingSystem/movieticketbookingsystem
    ```
 3. Configure the database settings in `application.properties`.
 4. Build the project using Maven:
